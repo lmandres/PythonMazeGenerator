@@ -101,13 +101,13 @@ class MazeGenerator(object):
 
             if not self.maze[curr_row][curr_col] & self.VISITED:
                 if (curr_row == prev_row-1 and curr_col == prev_col):
-                    self.maze[prev_row][prev_col] &= self.VISITED + self.WALL_LEFT
+                    self.maze[prev_row][prev_col] &= (self.VISITED + self.WALL_LEFT)
                 elif (curr_row == prev_row and curr_col == prev_col+1):
-                    self.maze[curr_row][curr_col] &= self.VISITED + self.WALL_UP
+                    self.maze[curr_row][curr_col] &= (self.VISITED + self.WALL_UP)
                 elif (curr_row == prev_row+1 and curr_col == prev_col):
-                    self.maze[curr_row][curr_col] &= self.VISITED + self.WALL_LEFT
+                    self.maze[curr_row][curr_col] &= (self.VISITED + self.WALL_LEFT)
                 elif (curr_row == prev_row and curr_col == prev_col-1):
-                    self.maze[prev_row][prev_col] &= self.VISITED + self.WALL_UP
+                    self.maze[prev_row][prev_col] &= (self.VISITED + self.WALL_UP)
                 self.maze[curr_row][curr_col] |= self.VISITED
 
     def backtrack(
