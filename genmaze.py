@@ -101,13 +101,13 @@ class MazeGenerator(object):
 
             if not self.maze[curr_row][curr_col] & self.VISITED:
                 if (curr_row == prev_row-1 and curr_col == prev_col):
-                    self.maze[prev_row][prev_col] -= self.WALL_UP
+                    self.maze[prev_row][prev_col] &= self.VISITED + self.WALL_LEFT
                 elif (curr_row == prev_row and curr_col == prev_col+1):
-                    self.maze[curr_row][curr_col] -= self.WALL_LEFT
+                    self.maze[curr_row][curr_col] &= self.VISITED + self.WALL_UP
                 elif (curr_row == prev_row+1 and curr_col == prev_col):
-                    self.maze[curr_row][curr_col] -= self.WALL_UP
+                    self.maze[curr_row][curr_col] &= self.VISITED + self.WALL_LEFT
                 elif (curr_row == prev_row and curr_col == prev_col-1):
-                    self.maze[prev_row][prev_col] -= self.WALL_LEFT
+                    self.maze[prev_row][prev_col] &= self.VISITED + self.WALL_UP
                 self.maze[curr_row][curr_col] |= self.VISITED
 
     def backtrack(
@@ -120,54 +120,39 @@ class MazeGenerator(object):
         def backtrackUp(row, col):
             curr_row = row
             curr_col = col
-            if (
-                not self.maze[curr_row][curr_col] & self.WALL_UP and
-                curr_row-1 != prev_row
-            ):
+            if not self.maze[curr_row][curr_col] & self.WALL_UP:
                 curr_row -= 1
                 return (curr_row, curr_col)
-        def backtrackLeft(row, col):
+        def backtrackRight(row, col):
             curr_row = row
             curr_col = col
-            if (
-                not self.maze[curr_row][curr_col+1] & self.WALL_LEFT and
-                curr_col+1 != prev_col
-            ):
+            if not self.maze[curr_row][curr_col+1] & self.WALL_LEFT:
                 curr_col += 1
                 return (curr_row, curr_col)
         def backtrackDown(row, col):
             curr_row = row
             curr_col = col
-            if (
-                not self.maze[curr_row+1][curr_col] & self.WALL_UP and
-                curr_row+1 != prev_row
-            ):
+            if not self.maze[curr_row+1][curr_col] & self.WALL_UP:
                 curr_row += 1
                 return (curr_row, curr_col)
-        def backtrackRight(row, col):
+        def backtrackLeft(row, col):
             curr_row = row
             curr_col = col
-            if (
-                not self.maze[curr_row][curr_col] & self.WALL_LEFT and
-                curr_col-1 != prev_col
-            ):
+            if not self.maze[curr_row][curr_col] & self.WALL_LEFT:
                 curr_col -= 1
                 return (curr_row, curr_col)
 
         backtrackList = [
             backtrackUp,
-            backtrackLeft,
+            backtrackRight,
             backtrackDown,
-            backtrackRight
+            backtrackLeft
         ]
         backtrack_index = 0
         curr_row = start_row
         curr_col = start_col
 
         while True:
-            prev_row = curr_row
-            prev_col = curr_col
-
             if (
                 test_visited and (
                     not self.maze[curr_row-1][curr_col] & self.VISITED or
