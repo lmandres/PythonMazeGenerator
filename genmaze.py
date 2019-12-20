@@ -259,8 +259,10 @@ class MazeGenerator(object):
             for col_index in range(0, self.cols+2, 1):
                 if self.maze[row_index][col_index] & self.WALL_UP:
                     print('+--', end='')
-                else:
+                elif row_index != 0 and col_index != 0:
                     print('+  ', end='')
+                else:
+                    print('   ', end='')
             print()
             for col_index in range(0, self.cols+2, 1):
                 if self.maze[row_index][col_index] & self.WALL_LEFT:
