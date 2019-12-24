@@ -1,4 +1,6 @@
+import argparse
 import random
+
 
 class MazeGenerator(object):
 
@@ -284,6 +286,24 @@ class MazeGenerator(object):
             print()
 
 if __name__ == '__main__':
+
+    parser = argparse.ArgumentParser(
+        description = (
+            'Generate a maze with a number of rows and columns.'
+        )
+    )
+    parser.add_argument('--rows', type=int, help=(
+            'An integer for the number of rows to produce in the maze.'
+        ),
+        default=10
+    )
+    parser.add_argument('--cols', type=int, help=(
+            'An integer for the number of columns to produce in the maze.'
+        ),
+        default=10
+    )
+    args = parser.parse_args()
+
     mg = MazeGenerator()
-    mg.generate(10, 10)
+    mg.generate(args.rows, args.cols)
 
