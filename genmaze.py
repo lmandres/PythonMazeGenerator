@@ -1,3 +1,4 @@
+import argparse
 import random
 
 
@@ -425,11 +426,17 @@ class MazeGenerator(object):
                 if self.maze[row_index][col_index] & self.WALL_UP:
                     # Print the upper wall
                     print('+--', end='')
-                # If not
-                else:
-                    # Print a blank wall
+                # Else If the row is not the top row
+                # or leftmost column
+                elif row_index != 0 and col_index != 0:
+                    # Print a corner
                     print('+  ', end='')
-            # Move to the next line
+                # Last case is if it is top row
+                # or leftmost column
+                else:
+                    # Print a number of blank spaces
+                    print('   ', end='')
+            # Move to next line
             print()
 
             # Next is to print the side walls
@@ -472,4 +479,24 @@ if __name__ == '__main__':
     mg = MazeGenerator()
     # Tell the generator to generate a 10x10 maze
     #mg.generate(10, 10)
-    mg.generate(28, 62)
+    #mg.generate(28, 62)
+
+    parser = argparse.ArgumentParser(
+        description = (
+            'Generate a maze with a number of rows and columns.'
+        )
+    )
+    parser.add_argument('--rows', type=int, help=(
+            'An integer for the number of rows to produce in the maze.'
+        ),
+        default=10
+    )
+    parser.add_argument('--cols', type=int, help=(
+            'An integer for the number of columns to produce in the maze.'
+        ),
+        default=10
+    )
+    args = parser.parse_args()
+
+    mg = MazeGenerator()
+    mg.generate(args.rows, args.cols)
