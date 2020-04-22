@@ -284,5 +284,4 @@ class MazeGenerator(object):
 
 if __name__ == '__main__':
     mg = MazeGenerator()
-    mg.generate(20, 20)
-
+    mg.generate(30, 30)
