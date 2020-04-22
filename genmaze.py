@@ -1,6 +1,6 @@
 import random
 
-# Leo edited this
+# Leo edited this again.
 class MazeGenerator(object):
 
     VISITED = 2**0
